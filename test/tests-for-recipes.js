@@ -94,21 +94,29 @@ describe("Recipes", function() {
     });
 
     // For important edge case in POST
-    /** 
+    
     it("should show an error when a name value is not given", function() {
         const newBadItem = {
-            ingredients : ["rock", "paper", "scissors"]
+            //name : "Kabob" ,
+            ingredients : ["steak", "chicken", "cucumber", "potato"]
         };
         return chai.request(app)
         .post(`/recipes`)
         .send(newBadItem)
         .then(function(response) {
-            console.log(`333333333333333333333333333`);
-            expect(response).to.throw(error);
-
-            const requiredFields = [`name`, `id`, `ingredients`];
-            expect(response.body).not.to.include.keys(requiredFields);
-        });   
+            throw new Error(`failed message`);
+            console.log(response);
+        })
+        .catch(function(error) {
+            //console.log(error);
+            //console.log(error.response);
+            if (error.response) {
+                expect(error).to.have.status(400);
+                //expect(error).not.to.have.property(`AssertionError`);
+            } else {
+                throw error;
+            }
+         });
     });
-    **/
+    
 });

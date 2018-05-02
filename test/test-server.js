@@ -117,6 +117,7 @@ describe('Shopping List', function() {
       // prove that the PUT request has right status code
       // and returns updated item
       .then(function(res) {
+        console.log(res);
         expect(res).to.have.status(200);
         expect(res).to.be.json;
         expect(res.body).to.be.a('object');
