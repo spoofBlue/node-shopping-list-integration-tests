@@ -104,15 +104,12 @@ describe("Recipes", function() {
         .post(`/recipes`)
         .send(newBadItem)
         .then(function(response) {
-            throw new Error(`failed message`);
+            throw new Error(`Failed case actually shows as an success.`);
             console.log(response);
         })
         .catch(function(error) {
-            //console.log(error);
-            //console.log(error.response);
             if (error.response) {
                 expect(error).to.have.status(400);
-                //expect(error).not.to.have.property(`AssertionError`);
             } else {
                 throw error;
             }
