@@ -19,6 +19,7 @@ describe("Recipes", function() {
         return closeServer();
     });
 
+    // For GET
     it("should get recipe list", function() {
         return chai.request(app)
         .get(`/recipes`)
@@ -37,6 +38,7 @@ describe("Recipes", function() {
         });
     });
 
+    // For POST
     it("should post a recipe into list", function() {
         const newItem = {
             name : "Kabob" ,
@@ -57,6 +59,7 @@ describe("Recipes", function() {
         });
     });
 
+    // For PUT
     it("should update the selected recipe already on the list with PUT", function() {
         const updatedItem = {
             name : "Kabob" ,
@@ -76,16 +79,36 @@ describe("Recipes", function() {
         });
     });
 
+    // For DELETE
     it("should delete the selected recipe already on the list", function() {
-        chai.request(app)
+        return chai.request(app)
         .get(`/recipes`)
         .then(function(response) {
             const removeThisId = response.body[0].id
-            chai.request(app)
-            .delete(`/recipes/${removeThisID}`);
+            return chai.request(app)
+            .delete(`/recipes/${removeThisId}`);
         })
         .then(function(response) {
             expect(response).to.have.status(204);
         });
     });
+
+    // For important edge case in POST
+    /** 
+    it("should show an error when a name value is not given", function() {
+        const newBadItem = {
+            ingredients : ["rock", "paper", "scissors"]
+        };
+        return chai.request(app)
+        .post(`/recipes`)
+        .send(newBadItem)
+        .then(function(response) {
+            console.log(`333333333333333333333333333`);
+            expect(response).to.throw(error);
+
+            const requiredFields = [`name`, `id`, `ingredients`];
+            expect(response.body).not.to.include.keys(requiredFields);
+        });   
+    });
+    **/
 });
