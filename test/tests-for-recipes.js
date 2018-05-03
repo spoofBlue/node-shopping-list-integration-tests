@@ -105,7 +105,6 @@ describe("Recipes", function() {
         .send(newBadItem)
         .then(function(response) {
             throw new Error(`Failed case actually shows as an success.`);
-            console.log(response);
         })
         .catch(function(error) {
             if (error.response) {
